@@ -1,0 +1,33 @@
+Notes
+
+Instance URL : https://demoorg-in.my.salesforce-setup.com
+
+Exercise -1  We are using vp page where we will have a button upon clicking an apex class will be called where it will append an authorisation code in the url and we will read this url and we will make an post call using an apex class where it will fetch the token and will store all the information in the custom metadata record.
+
+
+
+-> First we created an VF page using the code given in the git repo
+->Now create a custom metadata and create fields and also a custom metadata record and fill the details like client Id , environment etc.
+
+First step : create an url for authorisation(code) 
+
+Similar to this :
+https://login.salesforce.com/services/oauth2/authorize?client_id=3MVG9vIoc6tt9pNleIOuFlHm4wvRTq215PfDxGDA6ewfpbgOixpqIM6XdB7a1mzLEmvUbaBDJ_wxtae.nGWFO&
+redirect_uri=https://login.salesforce.com/services/oauth2/success&
+response_type=code
+
+
+From VF Page we need to go navigate to the url similar to above for that we will use Page reference class.
+So In my apex class I have a method getAuthCode() where it will give us the code as upon clicking the button on vf page it will return the url of code similar to below 
+https://demoorg-in--c.vf.force.com/apex/PS_SalesforceTokenPage?code=aPrxajq3E6uzpacnPAEBNonfGLBjmWxKVjuKNz3nz.8REuCduwj23X8zOidd1WIE_7_KdTsqnX5y1FrC5CxhMHIFofrY7HI%3D
+
+
+Now with the apex class PS_SalesforceTokenUtils where the first method is used to get code getAuthCode and the second method getAccessToken have successfully retried the access token, now the task is to store the information which we retired from getAccessToken to custom meta data record.
+
+We created a class Called PS_SalesforceTokenWrapper so that we can store the data like access_token etc from the response body which we got.
+
+Now we have deployed the metadata record where we will have all the fields which are enough to make a post call like create account records etc.
+
+As access token will be expired we will use refresh token to generate new access token.
+
+
